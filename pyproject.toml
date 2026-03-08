@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-trading-bot"
+version = "0.1.0"
+description = "A paper trading bot simulation with ML-based strategies"
+requires-python = ">= 3.11"
+dependencies = [
+    "alpaca-py",
+    "pandas",
+    "numpy",
+    "ta",
+    "pydantic-settings",
+    "python-dotenv",
+    "loguru",
+    "scikit-learn",
+    "streamlit",
+    "plotly",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+]
+
+[project.scripts]
+trading_bot = "trading_bot.bot:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

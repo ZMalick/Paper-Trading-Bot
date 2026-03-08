@@ -1,0 +1,22 @@
+# Environment
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Type checking / linting
+.mypy_cache/
+.ruff_cache/
+
+# Notebooks
+notebooks/.ipynb_checkpoints/
+
+# Models
+models/*.pkl
