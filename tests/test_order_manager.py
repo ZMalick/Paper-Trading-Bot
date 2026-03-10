@@ -53,7 +53,7 @@ def test_calculate_position_size_buy(order_manager):
         symbol="AAPL", signal_type=SignalType.BUY,
         strategy_name="test", confidence=0.8,
     )
-    qty = order_manager.calculate_position_size("AAPL", signal)
+    qty = order_manager.calculate_position_size("AAPL", signal, current_price=150.0)
     # 10% of $100k = $10k, at $150/share = 66 shares
     assert qty == 66
 
@@ -72,7 +72,7 @@ def test_execute_signal_buy(order_manager):
         symbol="AAPL", signal_type=SignalType.BUY,
         strategy_name="test", confidence=0.8,
     )
-    trade = order_manager.execute_signal(signal)
+    trade = order_manager.execute_signal(signal, current_price=150.0)
     assert trade is not None
     assert trade.side == "BUY"
     assert trade.symbol == "AAPL"

@@ -13,7 +13,8 @@ def _make_settings(monkeypatch, extra_env=None):
     # Need to reimport to avoid cached module-level `settings`
     import trading_bot.config
     importlib.reload(trading_bot.config)
-    return trading_bot.config.Settings()
+    # Skip .env file so tests only see env vars set by monkeypatch
+    return trading_bot.config.Settings(_env_file=None)
 
 
 def test_settings_loads_from_env(monkeypatch):
