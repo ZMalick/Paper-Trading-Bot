@@ -86,7 +86,8 @@ class TradingBot:
 
                 # Execute if not HOLD
                 if signal.signal_type != SignalType.HOLD:
-                    trade = self.order_manager.execute_signal(signal)
+                    current_price = float(bars["close"].iloc[-1])
+                    trade = self.order_manager.execute_signal(signal, current_price)
                     if trade:
                         self.portfolio.record_trade(trade)
                         logger.info(

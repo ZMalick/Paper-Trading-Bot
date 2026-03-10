@@ -38,7 +38,7 @@ class OrderManager:
             logger.error(f"Failed to fetch positions: {e}")
             raise
 
-    def calculate_position_size(self, symbol: str, signal: Signal) -> int:
+    def calculate_position_size(self, symbol: str, signal: Signal, current_price: float = 0.0) -> int:
         """Calculate the number of shares to buy based on max_position_pct of equity.
 
         Returns 0 if already at max position or if the signal is not a BUY.
@@ -65,10 +65,7 @@ class OrderManager:
                     # Reduce allocation by existing position value
                     max_position_value -= current_value
 
-            # Get the latest price from the existing position or latest trade
-            latest_trade = self.trading_client.get_latest_trade(symbol)
-            price = float(latest_trade.price)
-
+            price = current_price
             if price <= 0:
                 logger.warning(f"Invalid price for {symbol}: {price}")
                 return 0
@@ -84,7 +81,7 @@ class OrderManager:
             logger.error(f"Error calculating position size for {symbol}: {e}")
             return 0
 
-    def execute_signal(self, signal: Signal) -> Optional[TradeRecord]:
+    def execute_signal(self, signal: Signal, current_price: float = 0.0) -> Optional[TradeRecord]:
         """Execute a trading signal and return a TradeRecord, or None for HOLD.
 
         - BUY: Place a market buy order with calculated position size.
@@ -98,7 +95,7 @@ class OrderManager:
             return None
 
         if signal.signal_type == SignalType.BUY:
-            qty = self.calculate_position_size(symbol, signal)
+            qty = self.calculate_position_size(symbol, signal, current_price)
             if qty <= 0:
                 logger.info(f"No shares to buy for {symbol} (qty=0)")
                 return None
