@@ -20,7 +20,7 @@ class MarketDataFetcher:
     def get_bars(
         self,
         symbol: str,
-        timeframe: TimeFrame = TimeFrame.Day,
+        timeframe: TimeFrame = TimeFrame.Hour,
         start: datetime | None = None,
         end: datetime | None = None,
         limit: int = 100,

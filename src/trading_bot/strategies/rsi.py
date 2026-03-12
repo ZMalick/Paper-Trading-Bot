@@ -9,15 +9,15 @@ from trading_bot.strategies.base import Strategy
 
 
 class RSIStrategy(Strategy):
-    """Buy when RSI < 30 (oversold), sell when RSI > 70 (overbought)."""
+    """Buy when RSI < 45 (oversold), sell when RSI > 55 (overbought)."""
 
     name: str = "rsi"
 
     def __init__(
         self,
         window: int = 14,
-        oversold: float = 30.0,
-        overbought: float = 70.0,
+        oversold: float = 45.0,
+        overbought: float = 55.0,
     ) -> None:
         self.window = window
         self.oversold = oversold
